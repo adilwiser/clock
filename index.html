@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background: rgb(0, 0, 0);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .clock {
+            font-size: 90px;
+            color: white;
+            letter-spacing: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="clock" id="clock"></div>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            document.getElementById('clock').textContent = timeString;
+        }
+
+        // Update the clock every second
+        setInterval(updateClock, 1000);
+        updateClock(); // Initial call
+    </script>
+</body>
+</html>
