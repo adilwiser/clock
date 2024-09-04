@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,6 +28,7 @@
             border-radius: 15px;
             box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
             text-align: center;
+            position: relative;
         }
 
         /* Styling for the clock display */
@@ -50,29 +52,94 @@
                 text-shadow: 0 0 20px rgba(0, 255, 204, 0.7);
             }
         }
+
+        /* Media query for responsive font size */
+        @media (max-width: 600px) {
+            .clock {
+                font-size: 60px;
+            }
+        }
+
+        /* Styling for the theme selector */
+        .theme-selector {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .theme-selector button {
+            background: #444;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .theme-selector button:hover {
+            background: #666;
+        }
     </style>
 </head>
 
 <body>
     <!-- Clock container with clock display -->
-    <div class="clock-container">
+    <div class="clock-container" aria-live="polite">
         <div class="clock" id="clock"></div>
+        <div class="theme-selector">
+            <button onclick="changeTheme('default')">Default</button>
+            <button onclick="changeTheme('neon')">Neon</button>
+            <button onclick="changeTheme('retro')">Retro</button>
+        </div>
     </div>
 
     <script>
         // Function to update the clock display
         function updateClock() {
             const now = new Date();
-            const hours = now.getHours().toString().padStart(2, '0');
+            let hours = now.getHours();
             const minutes = now.getMinutes().toString().padStart(2, '0');
             const seconds = now.getSeconds().toString().padStart(2, '0');
-            const timeString = `${hours}:${minutes}:${seconds}`;
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            const hoursString = hours.toString().padStart(2, '0');
+            const timeString = `${hoursString}:${minutes}:${seconds} ${ampm}`;
             document.getElementById('clock').textContent = timeString;
         }
 
         // Update the clock every second
         setInterval(updateClock, 1000);
         updateClock(); // Initial call to set the clock immediately
+
+        // Function to change theme styles
+        function changeTheme(theme) {
+            const clock = document.querySelector('.clock');
+            const clockContainer = document.querySelector('.clock-container');
+
+            switch (theme) {
+                case 'default':
+                    document.body.style.background = 'linear-gradient(135deg, #1e1e1e, #2c2c2c)';
+                    clock.style.color = '#00ff99';
+                    clock.style.textShadow = '0 0 20px rgba(0, 255, 204, 0.7)';
+                    clockContainer.style.background = 'rgba(0, 0, 0, 0.8)';
+                    break;
+                case 'neon':
+                    document.body.style.background = 'linear-gradient(135deg, #000000, #002b36)';
+                    clock.style.color = '#ff00ff';
+                    clock.style.textShadow = '0 0 30px rgba(255, 0, 255, 1)';
+                    clockContainer.style.background = 'rgba(0, 0, 0, 0.9)';
+                    break;
+                case 'retro':
+                    document.body.style.background = 'linear-gradient(135deg, #f39c12, #e67e22)';
+                    clock.style.color = '#ecf0f1';
+                    clock.style.textShadow = '0 0 15px rgba(236, 240, 241, 0.9)';
+                    clockContainer.style.background = 'rgba(0, 0, 0, 0.7)';
+                    break;
+                default:
+                    break;
+            }
+        }
     </script>
 </body>
 
