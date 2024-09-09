@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,57 +5,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Clock</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* Base styling for the body */
         body {
-            background: linear-gradient(135deg, #1e1e1e, #2c2c2c);
+            background: linear-gradient(135deg, #0f0f0f, #202020);
             margin: 0;
             padding: 0;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Orbitron', sans-serif;
-            color: #fff; /* Default text color */
+            font-family: 'Helvetica', sans-serif; /* Changed to Helvetica */
+            color: #fff;
         }
 
         /* Styling for the clock container */
         .clock-container {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
             text-align: center;
             position: relative;
         }
 
         /* Styling for the clock display */
         .clock {
-            font-size: 90px;
-            color: #00ff99;
-            letter-spacing: 10px;
-            text-shadow: 0 0 20px rgba(0, 255, 204, 0.7);
+            font-size: 100px;
+            color: #00e5ff;
+            letter-spacing: 8px;
+            text-shadow: 0 0 30px rgba(0, 229, 255, 0.8);
             animation: pulse 1.5s infinite;
         }
 
         /* Keyframes for the pulse animation */
         @keyframes pulse {
             0% {
-                text-shadow: 0 0 20px rgba(0, 255, 204, 0.7);
+                text-shadow: 0 0 30px rgba(0, 229, 255, 0.8);
             }
             50% {
-                text-shadow: 0 0 30px rgba(0, 255, 204, 1);
+                text-shadow: 0 0 40px rgba(0, 229, 255, 1);
             }
             100% {
-                text-shadow: 0 0 20px rgba(0, 255, 204, 0.7);
+                text-shadow: 0 0 30px rgba(0, 229, 255, 0.8);
             }
         }
 
         /* Media query for responsive font size */
         @media (max-width: 600px) {
             .clock {
-                font-size: 60px;
+                font-size: 70px;
+                letter-spacing: 5px;
             }
         }
 
@@ -67,17 +66,40 @@
         }
 
         .theme-selector button {
-            background: #444;
+            background: #333;
             border: none;
             color: #fff;
-            padding: 10px 20px;
+            padding: 12px 24px;
             margin: 5px;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s, transform 0.2s;
         }
 
         .theme-selector button:hover {
-            background: #666;
+            background: #555;
+        }
+
+        .theme-selector button:active {
+            transform: scale(0.95);
+        }
+
+        .theme-selector button.default {
+            background: #444;
+        }
+
+        .theme-selector button.neon {
+            background: #111;
+        }
+
+        .theme-selector button.retro {
+            background: #e67e22;
+            color: #000;
+        }
+
+        .theme-selector button.retro:hover {
+            background: #d35400;
         }
     </style>
 </head>
@@ -87,9 +109,9 @@
     <div class="clock-container" aria-live="polite">
         <div class="clock" id="clock"></div>
         <div class="theme-selector">
-            <button onclick="changeTheme('default')">Default</button>
-            <button onclick="changeTheme('neon')">Neon</button>
-            <button onclick="changeTheme('retro')">Retro</button>
+            <button class="default" onclick="changeTheme('default')">Default</button>
+            <button class="neon" onclick="changeTheme('neon')">Neon</button>
+            <button class="retro" onclick="changeTheme('retro')">Retro</button>
         </div>
     </div>
 
@@ -119,21 +141,21 @@
 
             switch (theme) {
                 case 'default':
-                    document.body.style.background = 'linear-gradient(135deg, #1e1e1e, #2c2c2c)';
-                    clock.style.color = '#00ff99';
-                    clock.style.textShadow = '0 0 20px rgba(0, 255, 204, 0.7)';
-                    clockContainer.style.background = 'rgba(0, 0, 0, 0.8)';
+                    document.body.style.background = 'linear-gradient(135deg, #0f0f0f, #202020)';
+                    clock.style.color = '#00e5ff';
+                    clock.style.textShadow = '0 0 30px rgba(0, 229, 255, 0.8)';
+                    clockContainer.style.background = 'rgba(0, 0, 0, 0.7)';
                     break;
                 case 'neon':
-                    document.body.style.background = 'linear-gradient(135deg, #000000, #002b36)';
+                    document.body.style.background = 'linear-gradient(135deg, #000000, #003366)';
                     clock.style.color = '#ff00ff';
-                    clock.style.textShadow = '0 0 30px rgba(255, 0, 255, 1)';
+                    clock.style.textShadow = '0 0 40px rgba(255, 0, 255, 1)';
                     clockContainer.style.background = 'rgba(0, 0, 0, 0.9)';
                     break;
                 case 'retro':
                     document.body.style.background = 'linear-gradient(135deg, #f39c12, #e67e22)';
                     clock.style.color = '#ecf0f1';
-                    clock.style.textShadow = '0 0 15px rgba(236, 240, 241, 0.9)';
+                    clock.style.textShadow = '0 0 25px rgba(236, 240, 241, 0.9)';
                     clockContainer.style.background = 'rgba(0, 0, 0, 0.7)';
                     break;
                 default:
