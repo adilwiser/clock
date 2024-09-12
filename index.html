@@ -15,7 +15,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Helvetica', sans-serif; /* Changed to Helvetica */
+            font-family: 'Helvetica', sans-serif;
             color: #fff;
         }
 
@@ -43,9 +43,11 @@
             0% {
                 text-shadow: 0 0 30px rgba(0, 229, 255, 0.8);
             }
+
             50% {
                 text-shadow: 0 0 40px rgba(0, 229, 255, 1);
             }
+
             100% {
                 text-shadow: 0 0 30px rgba(0, 229, 255, 0.8);
             }
@@ -101,6 +103,25 @@
         .theme-selector button.retro:hover {
             background: #d35400;
         }
+
+        /* Fullscreen button styling */
+        .fullscreen-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #555;
+            border: none;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .fullscreen-button:hover {
+            background: #777;
+        }
     </style>
 </head>
 
@@ -113,6 +134,7 @@
             <button class="neon" onclick="changeTheme('neon')">Neon</button>
             <button class="retro" onclick="changeTheme('retro')">Retro</button>
         </div>
+        <button class="fullscreen-button" onclick="toggleFullscreen()">⛶ Fullscreen</button>
     </div>
 
     <script>
@@ -160,6 +182,15 @@
                     break;
                 default:
                     break;
+            }
+        }
+
+        // Function to toggle fullscreen mode
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else if (document.exitFullscreen) {
+                document.exitFullscreen();
             }
         }
     </script>
