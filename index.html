@@ -87,126 +87,9 @@
             content: "⛶";
         }
 
-        .fullscreen-button:hover::after {
-            content: "Fullscreen";
-            position: absolute;
-            top: 50px;
-            left: 0;
-            background: #333;
-            color: #fff;
-            padding: 5px;
-            border-radius: 4px;
-            font-size: 14px;
-            white-space: nowrap;
-        }
-
         .fullscreen-button:hover {
             background: #777;
         }
-
-        /* Settings button and menu styling */
-        .settings-container {
-            position: absolute;
-            top: 10px;
-            left: 60px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .settings-button {
-            background: #333;
-            border: none;
-            color: #fff;
-            padding: 8px;
-            border-radius: 50%;
-            font-size: 16px;
-            transition: background 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-        }
-
-        .settings-button::before {
-            content: "⚙️";
-        }
-
-        .settings-menu {
-            display: none;
-            position: absolute;
-            top: 50px;
-            left: 0;
-            background: #444;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            z-index: 1;
-            padding: 10px;
-            width: 250px;
-        }
-
-        .settings-container:hover .settings-menu {
-            display: block;
-        }
-
-        .settings-menu section {
-            margin-bottom: 10px;
-        }
-
-        .settings-menu h3 {
-            color: #fff;
-            margin: 10px 0;
-        }
-
-        .settings-menu button {
-            background: #333;
-            border: none;
-            color: #fff;
-            padding: 10px 20px;
-            margin: 5px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background 0.3s, transform 0.2s;
-            display: block;
-            width: 100%;
-        }
-
-        .settings-menu button:hover {
-            background: #555;
-        }
-
-        .settings-menu button:active {
-            transform: scale(0.95);
-        }
-
-        /* Options for background colors */
-        .bg-color1 { background: #333; }
-        .bg-color2 { background: #444; }
-        .bg-color3 { background: #555; }
-
-        /* Options for fonts */
-        .font-helvetica { font-family: 'Helvetica', sans-serif; }
-        .font-arial { font-family: 'Arial', sans-serif; }
-        .font-courier { font-family: 'Courier New', monospace; }
-
-        /* Options for text colors */
-        .text-color1 { color: #00e5ff; }
-        .text-color2 { color: #ff6347; }
-        .text-color3 { color: #32cd32; }
-
-        /* Options for clock sizes */
-        .size-small { font-size: 60px; }
-        .size-medium { font-size: 100px; }
-        .size-large { font-size: 150px; }
-
-        /* Options for modern themes */
-        .theme-default { background: rgba(0, 0, 0, 0.7); }
-        .theme-dark { background: rgba(0, 0, 0, 0.9); }
-        .theme-neon { background: rgba(0, 0, 0, 0.7); color: #00e5ff; }
-        .theme-retro { background: rgba(0, 0, 0, 0.7); color: #000; }
     </style>
 </head>
 <body>
@@ -214,70 +97,9 @@
     <div class="clock-container" id="clock-container">
         <div class="clock" id="clock"></div>
     </div>
-    <div class="settings-container">
-        <button class="settings-button"></button>
-        <div class="settings-menu">
-            <!-- Background Color Options -->
-            <section>
-                <h3>Background Color</h3>
-                <button class="bg-color1" onclick="changeBackground('bg-color1')">Background 1</button>
-                <button class="bg-color2" onclick="changeBackground('bg-color2')">Background 2</button>
-                <button class="bg-color3" onclick="changeBackground('bg-color3')">Background 3</button>
-            </section>
-            <!-- Font Family Options -->
-            <section>
-                <h3>Font Family</h3>
-                <button class="font-helvetica" onclick="changeFont('font-helvetica')">Helvetica</button>
-                <button class="font-arial" onclick="changeFont('font-arial')">Arial</button>
-                <button class="font-courier" onclick="changeFont('font-courier')">Courier</button>
-            </section>
-            <!-- Font Size Options -->
-            <section>
-                <h3>Font Size</h3>
-                <button class="size-small" onclick="changeSize('size-small')">Small</button>
-                <button class="size-medium" onclick="changeSize('size-medium')">Medium</button>
-                <button class="size-large" onclick="changeSize('size-large')">Large</button>
-            </section>
-            <!-- Text Color Options -->
-            <section>
-                <h3>Text Color</h3>
-                <button class="text-color1" onclick="changeTextColor('text-color1')">Color 1</button>
-                <button class="text-color2" onclick="changeTextColor('text-color2')">Color 2</button>
-                <button class="text-color3" onclick="changeTextColor('text-color3')">Color 3</button>
-            </section>
-            <!-- Seconds Toggle -->
-            <section>
-                <h3>Show Seconds</h3>
-                <button onclick="toggleSeconds()">Toggle Seconds</button>
-            </section>
-            <!-- Time Format -->
-            <section>
-                <h3>Time Format</h3>
-                <button onclick="changeTimeFormat('12')">12-Hour</button>
-                <button onclick="changeTimeFormat('24')">24-Hour</button>
-            </section>
-            <!-- Modern Themes -->
-            <section>
-                <h3>Modern Themes</h3>
-                <button class="theme-default" onclick="changeTheme('theme-default')">Default</button>
-                <button class="theme-dark" onclick="changeTheme('theme-dark')">Dark</button>
-                <button class="theme-neon" onclick="changeTheme('theme-neon')">Neon</button>
-                <button class="theme-retro" onclick="changeTheme('theme-retro')">Retro</button>
-            </section>
-        </div>
-    </div>
     <button class="fullscreen-button"></button>
 
     <script>
-        // Variables for settings
-        let showSeconds = true;
-        let timeFormat = '12';
-        let currentBackground = 'bg-color1';
-        let currentFont = 'font-helvetica';
-        let currentSize = 'size-medium';
-        let currentTextColor = 'text-color1';
-        let currentTheme = 'theme-default';
-
         function updateClock() {
             const now = new Date();
             let hours = now.getHours();
@@ -285,58 +107,13 @@
             let seconds = now.getSeconds().toString().padStart(2, '0');
             let ampm = '';
 
-            if (timeFormat === '12') {
-                ampm = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12;
-                hours = hours ? hours : 12; // the hour '0' should be '12'
-            } else {
-                ampm = '';
-            }
-
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
             hours = hours.toString().padStart(2, '0');
-            const timeString = showSeconds ? `${hours}:${minutes}:${seconds} ${ampm}` : `${hours}:${minutes} ${ampm}`;
+
+            const timeString = `${hours}:${minutes}:${seconds}`;
 
             document.getElementById('clock').textContent = timeString;
-        }
-
-        function changeBackground(backgroundClass) {
-            document.getElementById('clock-container').className = `clock-container ${backgroundClass} ${currentFont} ${currentSize} ${currentTextColor} ${currentTheme}`;
-            currentBackground = backgroundClass;
-            updateClock();
-        }
-
-        function changeFont(fontClass) {
-            document.getElementById('clock-container').className = `clock-container ${currentBackground} ${fontClass} ${currentSize} ${currentTextColor} ${currentTheme}`;
-            currentFont = fontClass;
-            updateClock();
-        }
-
-        function changeSize(sizeClass) {
-            document.getElementById('clock-container').className = `clock-container ${currentBackground} ${currentFont} ${sizeClass} ${currentTextColor} ${currentTheme}`;
-            currentSize = sizeClass;
-            updateClock();
-        }
-
-        function changeTextColor(colorClass) {
-            document.getElementById('clock-container').className = `clock-container ${currentBackground} ${currentFont} ${currentSize} ${colorClass} ${currentTheme}`;
-            currentTextColor = colorClass;
-            updateClock();
-        }
-
-        function toggleSeconds() {
-            showSeconds = !showSeconds;
-            updateClock();
-        }
-
-        function changeTimeFormat(format) {
-            timeFormat = format;
-            updateClock();
-        }
-
-        function changeTheme(themeClass) {
-            document.getElementById('clock-container').className = `clock-container ${currentBackground} ${currentFont} ${currentSize} ${currentTextColor} ${themeClass}`;
-            currentTheme = themeClass;
-            updateClock();
         }
 
         // Initial clock update
