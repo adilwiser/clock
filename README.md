@@ -1,3 +1,3 @@
 # Digital Clock
 
-A stylish digital clock built using HTML.
+A simple digital clock built using HTML.
