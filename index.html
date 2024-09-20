@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,8 +28,6 @@
             border-radius: 20px;
             box-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
             text-align: center;
-            position: relative;
-            font-family: 'Helvetica', sans-serif; /* Default font */
             transition: all 0.3s; /* Smooth transitions for changes */
         }
 
@@ -40,6 +39,13 @@
             text-shadow: 0 0 30px rgba(0, 229, 255, 0.8);
             animation: pulse 1.5s infinite;
             display: block;
+        }
+
+        /* Styling for the date display */
+        .date {
+            font-size: 30px;
+            color: #fff;
+            margin-top: 10px;
         }
 
         /* Keyframes for the pulse animation */
@@ -60,6 +66,9 @@
             .clock {
                 font-size: 70px;
                 letter-spacing: 5px;
+            }
+            .date {
+                font-size: 20px;
             }
         }
 
@@ -93,9 +102,9 @@
     </style>
 </head>
 <body>
-    <!-- Clock container with clock display -->
     <div class="clock-container" id="clock-container">
         <div class="clock" id="clock"></div>
+        <div class="date" id="date"></div>
     </div>
     <button class="fullscreen-button"></button>
 
@@ -105,15 +114,19 @@
             let hours = now.getHours();
             let minutes = now.getMinutes().toString().padStart(2, '0');
             let seconds = now.getSeconds().toString().padStart(2, '0');
-            let ampm = '';
+            
+            // Format the date
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const dateString = now.toLocaleDateString(undefined, options);
 
             hours = hours % 12;
             hours = hours ? hours : 12; // the hour '0' should be '12'
             hours = hours.toString().padStart(2, '0');
 
             const timeString = `${hours}:${minutes}:${seconds}`;
-
+            
             document.getElementById('clock').textContent = timeString;
+            document.getElementById('date').textContent = dateString;
         }
 
         // Initial clock update
