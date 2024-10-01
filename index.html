@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Clock</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet"> <!-- Added a font link -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
     <style>
-        /* Base styling for the body */
         body {
             background: linear-gradient(135deg, #0f0f0f, #202020);
             margin: 0;
@@ -17,40 +16,36 @@
             align-items: center;
             font-family: 'Arial', sans-serif;
             color: #fff;
-            overflow: hidden; /* Prevent scrolling when fullscreen */
+            overflow: hidden;
             position: relative;
         }
 
-        /* Styling for the clock container */
         .clock-container {
             background: rgba(0, 0, 0, 0.7);
             padding: 30px;
             border-radius: 20px;
             box-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
             text-align: center;
-            transition: all 0.3s; /* Smooth transitions for changes */
+            transition: all 0.3s;
         }
 
-        /* Styling for the clock display */
         .clock {
             font-size: 100px;
-            font-family: 'Roboto', sans-serif; /* Changed font */
-            color: #ffcc00; /* Updated color for better contrast */
+            font-family: 'Roboto', sans-serif;
+            color: #ffcc00;
             letter-spacing: 5px;
-            text-shadow: 0 0 30px rgba(255, 204, 0, 0.8); /* Goldish shadow */
+            text-shadow: 0 0 30px rgba(255, 204, 0, 0.8);
             animation: pulse 1.5s infinite;
             display: block;
         }
 
-        /* Styling for the date display */
         .date {
             font-size: 30px;
             color: #fff;
             margin-top: 10px;
-            font-style: italic; /* Italic for a stylish touch */
+            font-style: italic;
         }
 
-        /* Keyframes for the pulse animation */
         @keyframes pulse {
             0% {
                 text-shadow: 0 0 30px rgba(255, 204, 0, 0.8);
@@ -63,7 +58,6 @@
             }
         }
 
-        /* Media query for responsive font size */
         @media (max-width: 600px) {
             .clock {
                 font-size: 70px;
@@ -74,11 +68,8 @@
             }
         }
 
-        /* Fullscreen button styling */
-        .fullscreen-button {
+        .fullscreen-button, .settings-button {
             position: absolute;
-            top: 10px;
-            left: 10px;
             background: #555;
             border: none;
             color: #fff;
@@ -86,7 +77,7 @@
             border-radius: 50%;
             cursor: pointer;
             font-size: 16px;
-            transition: background 0.3s, transform 0.3s; /* Added transform transition */
+            transition: background 0.3s, transform 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -94,13 +85,53 @@
             height: 40px;
         }
 
+        .fullscreen-button {
+            top: 10px;
+            left: 10px;
+        }
+
+        .settings-button {
+            top: 10px;
+            right: 10px;
+        }
+
         .fullscreen-button::before {
             content: "⛶";
         }
 
-        .fullscreen-button:hover {
+        .settings-button::before {
+            content: "⚙️";
+        }
+
+        .fullscreen-button:hover, .settings-button:hover {
             background: #777;
-            transform: scale(1.2); /* Scale up on hover */
+            transform: scale(1.2);
+        }
+
+        .settings-menu {
+            display: none;
+            position: absolute;
+            top: 60px; 
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .settings-menu button {
+            background: transparent;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 5px;
+            width: 100%;
+            text-align: left;
+        }
+
+        .settings-menu button:hover {
+            background: #444;
         }
     </style>
 </head>
@@ -110,33 +141,41 @@
         <div class="date" id="date"></div>
     </div>
     <button class="fullscreen-button"></button>
+    <button class="settings-button"></button>
+
+    <div class="settings-menu" id="settings-menu">
+        <button id="toggle-24-hour">Toggle 24-Hour Format</button>
+        <!-- Future settings can be added here -->
+    </div>
 
     <script>
+        let is24HourFormat = true; // Set default to 24-hour format
+
         function updateClock() {
             const now = new Date();
             let hours = now.getHours();
             let minutes = now.getMinutes().toString().padStart(2, '0');
             let seconds = now.getSeconds().toString().padStart(2, '0');
-            
-            // Format the date
+            let amPm = '';
+
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
             const dateString = now.toLocaleDateString(undefined, options);
 
-            hours = hours % 12;
-            hours = hours ? hours : 12; // the hour '0' should be '12'
+            if (!is24HourFormat) {
+                amPm = hours >= 12 ? ' PM' : ' AM'; // Determine AM or PM
+                hours = hours % 12;
+                hours = hours ? hours : 12; // the hour '0' should be '12'
+            }
             hours = hours.toString().padStart(2, '0');
 
-            const timeString = `${hours}:${minutes}:${seconds}`;
-            
+            const timeString = `${hours}:${minutes}:${seconds}${amPm}`;
             document.getElementById('clock').textContent = timeString;
             document.getElementById('date').textContent = dateString;
         }
 
-        // Initial clock update
         setInterval(updateClock, 1000);
         updateClock();
 
-        // Fullscreen functionality
         document.querySelector('.fullscreen-button').addEventListener('click', () => {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen();
@@ -145,6 +184,17 @@
                     document.exitFullscreen();
                 }
             }
+        });
+
+        document.querySelector('.settings-button').addEventListener('click', () => {
+            const settingsMenu = document.getElementById('settings-menu');
+            settingsMenu.style.display = settingsMenu.style.display === 'block' ? 'none' : 'block';
+        });
+
+        document.getElementById('toggle-24-hour').addEventListener('click', () => {
+            is24HourFormat = !is24HourFormat; // Toggle format
+            updateClock(); // Update the display immediately
+            document.getElementById('settings-menu').style.display = 'none'; // Close the menu
         });
     </script>
 </body>
