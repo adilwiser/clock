@@ -74,19 +74,20 @@
 
         .fullscreen-button, .settings-button {
             position: absolute;
-            background: #555;
-            border: none;
-            color: #fff;
+            background: rgba(255, 255, 255, 0.1); /* Light transparent background */
+            border: 2px solid rgba(255, 204, 0, 0.6); /* Glowing border */
+            color: #ffcc00; /* Match clock color */
             padding: 10px;
             border-radius: 50%;
             cursor: pointer;
             font-size: 16px;
-            transition: background 0.3s, transform 0.3s;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s, border-color 0.3s;
             width: 50px;
             height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.4); /* Glow effect */
         }
 
         .fullscreen-button {
@@ -100,8 +101,10 @@
         }
 
         .fullscreen-button:hover, .settings-button:hover {
-            background: #777;
+            background: rgba(255, 255, 255, 0.2); /* Slightly less transparent on hover */
             transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(255, 204, 0, 0.7); /* Enhanced glow on hover */
+            border-color: rgba(255, 204, 0, 1); /* Brighten border on hover */
         }
 
         .settings-menu {
