@@ -16,7 +16,37 @@
             font-family: 'Arial', sans-serif;
             color: #fff;
             position: relative;
-            background: black;
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        /* Default Dark Theme */
+        .theme-dark {
+            background-color: #121212; /* Dark mode background */
+            color: #fff;
+        }
+
+        /* Light Theme */
+        .theme-light {
+            background-color: #f0f0f0; /* Light mode background */
+            color: #000;
+        }
+
+        /* Blue Theme */
+        .theme-blue {
+            background-color: #1e3a8a; /* Dark blue background */
+            color: #ffffff;
+        }
+
+        /* Green Theme */
+        .theme-green {
+            background-color: #065f46; /* Dark green background */
+            color: #ffffff;
+        }
+
+        /* Red Theme */
+        .theme-red {
+            background-color: #b91c1c; /* Dark red background */
+            color: #ffffff;
         }
 
         .particle {
@@ -37,7 +67,7 @@
         }
 
         .clock-container {
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(18, 18, 18, 0.7);
             padding: 40px;
             border-radius: 20px;
             box-shadow: 0 0 60px rgba(255, 204, 0, 0.5);
@@ -48,9 +78,7 @@
         .clock {
             font-size: 100px;
             font-family: 'Roboto', sans-serif;
-            color: #ffcc00;
             letter-spacing: 5px;
-            text-shadow: 0 0 30px rgba(255, 204, 0, 0.8);
             animation: pulse 1.5s infinite;
         }
 
@@ -61,159 +89,282 @@
         }
 
         @keyframes pulse {
-            0% {
+            0%, 100% {
                 text-shadow: 0 0 30px rgba(255, 204, 0, 0.8);
             }
             50% {
                 text-shadow: 0 0 40px rgba(255, 204, 0, 1);
             }
-            100% {
-                text-shadow: 0 0 30px rgba(255, 204, 0, 0.8);
-            }
         }
 
-        .fullscreen-button, .settings-button {
+        .button {
             position: absolute;
             background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 204, 0, 0.6);
-            color: #ffcc00;
+            border: 2px solid rgba(255, 204, 0, 0.6); /* Outline for buttons */
+            color: inherit; /* Inherit text color from parent */
             padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s, transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 20px rgba(255, 204, 0, 0.4);
-        }
+            border-radius:50%;
+            cursor:pointer; 
+             font-size:16px; 
+             width:50px; 
+             height:50px; 
+             display:flex; 
+             align-items:center; 
+             justify-content:center; 
+             box-shadow:0px2px20pxrgba(255,204,0,.4); 
+             transition:.3s; 
+         }
 
-        .fullscreen-button {
-            top: 20px;
-            left: 20px;
-        }
+         .fullscreen-button { top:20px; left:20px; }
+         .settings-button { top:20px; right:20px; }
 
-        .settings-button {
-            top: 20px;
-            right: 20px;
-        }
+         .button:hover {
+             background-color: rgba(255,255,255,.2); 
+             transform:scale(1.1); 
+             box-shadow:0px2px30pxrgba(255,204,0,.7); 
+             border-color: rgba(255,204,0,1); /* Change border color on hover */
+         }
 
-        .fullscreen-button:hover, .settings-button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.1);
-            box-shadow: 0 0 30px rgba(255, 204, 0, 0.7);
-            border-color: rgba(255, 204, 0, 1);
-        }
+         .settings-menu {
+             display:none; 
+             position:absolute; 
+             top70px; /* Position below the settings button */
+             right20px; 
+             background-color:#222222; /* Darker background for settings menu */
+             border-radius10px; 
+             padding15px; 
+             box-shadow0px2px20pxrgba(0,0,0,.5); 
+             z-index:10; /* Ensure it appears above other elements */
+         }
 
-        .settings-menu {
-            display: none;
-            position: absolute;
-            top: 80px; 
-            right: 20px;
-            background: rgba(0, 0, 0, 0.9);
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-        }
+         .settings-menu h3 {
+             margin-top : -10px ; /* Adjust margin for title spacing */
+             margin-bottom :10px ; /* Space below title */
+         }
 
-        .settings-menu button, .settings-menu input[type="color"] {
-            background: transparent;
-            border: none;
-            color: #fff;
-            cursor: pointer;
-            font-size: 16px;
-            padding: 5px;
-            width: 100%;
-            text-align: left;
-            margin-bottom: 10px;
-        }
-    </style>
-</head>
-<body>
-    <div class="clock-container" id="clock-container">
-        <div class="clock" id="clock"></div>
-        <div class="date" id="date"></div>
-    </div>
-    <button class="fullscreen-button">⛶</button>
-    <button class="settings-button">⚙️</button>
+         .settings-menu label,
+         .settings-menu button,
+         .settings-menu input[type="color"] {
+             display:block; /* Stack elements vertically */
+             width : auto ; /* Auto width for inputs and buttons */
+             margin-bottom :10px ; /* Space between elements */
+         }
 
-    <div class="settings-menu" id="settings-menu">
-        <button id="toggle-24-hour">Toggle Time Format</button>
-        <input type="color" id="color-picker" title="Choose Clock Color">
-    </div>
+         .settings-menu button,
+         .settings-menu input[type="color"] {
+             background:none; 
+             border:none; 
+             color:#fff; 
+             cursor:pointer; 
+             font-size16px; 
+             padding5px; 
+         }
 
-    <script>
-        const createParticle = () => {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-            document.body.appendChild(particle);
-            particle.style.width = `${Math.random() * 10 + 5}px`;
-            particle.style.height = particle.style.width;
-            particle.style.backgroundColor = 'rgba(255, 204, 0, 0.5)';
-            particle.style.setProperty('--x', `${Math.random() * 200 - 100}px`);
-            particle.style.setProperty('--y', `${Math.random() * 200 - 100}px`);
-            particle.style.left = `${Math.random() * 100}vw`;
-            particle.style.top = `${Math.random() * 100}vh`;
-            setTimeout(() => {
-                particle.remove();
-            }, 2000);
-        };
+         .settings-menu button:hover {
+              text-decoration : underline ; /* Underline on hover for better feedback */
+         }
 
-        setInterval(createParticle, 300);
+         /* New styles for alarm and stopwatch */
+         .alarm-container,
+         .stopwatch-container {
+             display:none; /* Initially hidden */
+             margin-top20px; /* Spacing */
+         }
 
-        let is24HourFormat = true;
-        let clockColor = '#ffcc00';
+         input[type="time"] {
+             width:auto; /* Auto width for time input */
+         }
 
-        function updateClock() {
-            const now = new Date();
-            let hours = now.getHours();
-            let minutes = now.getMinutes().toString().padStart(2, '0');
-            let seconds = now.getSeconds().toString().padStart(2, '0');
-            let amPm = '';
+         .stopwatch-display {
+             font-size40px; /* Stopwatch font size */
+         }
+     </style>
+ </head>
+ <body class="theme-dark"> <!-- Default theme -->
+     <div class="clock-container" id="clock-container">
+         <div class="clock" id="clock"></div>
+         <div class="date" id="date"></div>
 
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            const dateString = now.toLocaleDateString(undefined, options);
+         <!-- Alarm Section -->
+         <div class="alarm-container" id="alarm-container">
+              <h3>Set Alarm</h3>
+              <input type="time" id="alarm-time">
+              <button id="set-alarm">Set Alarm</button>
+              <p id="alarm-status"></p>
+         </div>
 
-            if (!is24HourFormat) {
-                amPm = hours >= 12 ? ' PM' : ' AM';
-                hours = hours % 12 || 12;
-            }
-            hours = hours.toString().padStart(2, '0');
+         <!-- Stopwatch Section -->
+         <div class="stopwatch-container" id="stopwatch-container">
+              <h3>Stopwatch</h3>
+              <div class="stopwatch-display" id="stopwatch-display">00 : 00 : 00</div>
+              <button id="start-stopwatch">Start</button>
+              <button id="reset-stopwatch">Reset</button>
+         </div>
+     </div>
 
-            const timeString = `${hours}:${minutes}:${seconds}${amPm}`;
-            document.getElementById('clock').textContent = timeString;
-            document.getElementById('date').textContent = dateString;
-            document.getElementById('clock').style.color = clockColor;
-        }
+     <button class="button fullscreen-button">⛶</button>
+     <button class="button settings-button">⚙️</button>
 
-        setInterval(updateClock, 1000);
-        updateClock();
+     <div class="settings-menu" id="settings-menu">
+         <h3>Settings</h3> <!-- Added title for settings -->
+         
+         <!-- Toggle Time Format -->
+         <button id="toggle-24-hour">Toggle Time Format</button>
 
-        document.querySelector('.fullscreen-button').addEventListener('click', () => {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen();
-            } else {
-                document.exitFullscreen();
-            }
-        });
+         <!-- Theme Selector -->
+         <label for="theme-selector">Select Theme:</label>
+         <select id="theme-selector">
+              <option value="dark">Dark</option>
+              <option value="light">Light</option>
+              <option value="blue">Blue</option>
+              <option value="green">Green</option>
+              <option value="red">Red</option>
+          </select>
 
-        document.querySelector('.settings-button').addEventListener('click', () => {
-            const settingsMenu = document.getElementById('settings-menu');
-            settingsMenu.style.display = settingsMenu.style.display === 'block' ? 'none' : 'block';
-        });
+          <!-- Particle Toggle -->
+          <label for="toggle-particles">Toggle Particles:</label>
+          <input type="checkbox" id="toggle-particles" checked>
+     </div>
 
-        document.getElementById('toggle-24-hour').addEventListener('click', () => {
-            is24HourFormat = !is24HourFormat;
-            updateClock();
-            document.getElementById('settings-menu').style.display = 'none';
-        });
+     <script>
+         let is24HourFormat = true;
+         let particlesEnabled = true;
 
-        document.getElementById('color-picker').addEventListener('input', (event) => {
-            clockColor = event.target.value;
-            updateClock();
-        });
-    </script>
-</body>
+         // Alarm functionality
+         let alarmTime = null;
+
+         const createParticle = (theme) => {
+             if (!particlesEnabled) return;
+
+             const particle = document.createElement('div');
+             particle.classList.add('particle');
+
+             // Set random size and position
+             const size = Math.random() * (15 - 5) + 10 + 'px'; // Increased size for better visibility
+             particle.style.width = size;
+             particle.style.height = size;
+
+             // Set particle colors based on theme
+             switch (theme) {
+                 case 'light':
+                     particle.style.backgroundColor = 'rgba(255,165,0,.8)'; // Bright orange particles
+                     break;
+                 case 'blue':
+                     particle.style.backgroundColor = 'rgba(173,216,230,.8)'; // Light blue particles
+                     break;
+                 case 'green':
+                     particle.style.backgroundColor = 'rgba(144,238,144,.8)'; // Light green particles
+                     break;
+                 case 'red':
+                     particle.style.backgroundColor = 'rgba(255,99,71,.8)'; // Tomato particles
+                     break;
+                 default:
+                     particle.style.backgroundColor = 'rgba(255,204,0,.8)'; // Yellow particles (dark theme)
+                     break;
+             }
+             
+             particle.style.setProperty('--x', `${Math.random() * (200) -100}px`);
+             particle.style.setProperty('--y', `${Math.random() * (200) -100}px`);
+             
+             particle.style.left = `${Math.random() * (100)}vw`;
+             particle.style.top = `${Math.random() * (100)}vh`;
+             
+             document.body.appendChild(particle);
+             
+             setTimeout(() => { particle.remove(); },2000);
+         };
+
+         setInterval(() => createParticle(currentTheme),300);
+
+         let currentTheme = 'dark';
+
+         function updateClock() {
+              const now = new Date();
+              let hours = now.getHours();
+              let minutes = now.getMinutes().toString().padStart(2,'0');
+              let seconds = now.getSeconds().toString().padStart(2,'0');
+              let amPm = '';
+
+              const options = { year:'numeric', month:'long', day:'numeric' };
+              const dateString = now.toLocaleDateString(undefined, options);
+
+              if (!is24HourFormat) {
+                  amPm = hours >=12 ? ' PM' : ' AM';
+                  hours = hours %12 ||12;
+              }
+              
+              hours = hours.toString().padStart(2,'0');
+
+              const timeString = `${hours}:${minutes}:${seconds}${amPm}`;
+              document.getElementById('clock').textContent = timeString;
+              document.getElementById('date').textContent = dateString;
+
+              // Check for alarm
+              if (alarmTime && `${hours}:${minutes}` === alarmTime) {
+                  alert("Alarm ringing!");
+                  alarmTime = null; // Reset alarm after ringing
+                  document.getElementById('alarm-status').textContent = "Alarm has rung!";
+              } else if (alarmTime) {
+                  document.getElementById('alarm-status').textContent = "Alarm set for " + alarmTime + ".";
+              } else {
+                  document.getElementById('alarm-status').textContent = "";
+              }
+          }
+
+          setInterval(updateClock,1000);
+          updateClock();
+
+          // Alarm functionality
+          document.getElementById('set-alarm').addEventListener('click', () => {
+              const alarmInput = document.getElementById('alarm-time').value;
+              if (alarmInput) {
+                  alarmTime = alarmInput + ":00"; // Set alarm time in HH:mm:ss format
+                  document.getElementById('alarm-status').textContent = "Alarm set for " + alarmTime + ".";
+              }
+          });
+
+          // Fullscreen toggle
+          document.querySelector('.fullscreen-button').addEventListener('click', () => {
+              if (!document.fullscreenElement) { document.documentElement.requestFullscreen(); } else { document.exitFullscreen(); }
+          });
+
+          // Settings menu toggle
+          document.querySelector('.settings-button').addEventListener('click', () => {
+              const settingsMenu = document.getElementById('settings-menu');
+              settingsMenu.style.display = settingsMenu.style.display === 'block' ? 'none' : 'block';
+          });
+
+          // Toggle time format
+          document.getElementById('toggle-24-hour').addEventListener('click', () => {
+              is24HourFormat = !is24HourFormat;
+              updateClock();
+          });
+
+          // Theme Selector
+          document.getElementById('theme-selector').addEventListener('change', (event) => {
+               currentTheme = event.target.value;
+
+               // Remove all theme classes
+               document.body.classList.remove("theme-dark", "theme-light", "theme-blue", "theme-green", "theme-red");
+
+               // Add the selected theme class
+               if (currentTheme === "light") {
+                   document.body.classList.add("theme-light");
+               } else if (currentTheme === "blue") {
+                   document.body.classList.add("theme-blue");
+               } else if (currentTheme === "green") {
+                   document.body.classList.add("theme-green");
+               } else if (currentTheme === "red") {
+                   document.body.classList.add("theme-red");
+               } else { // Default to dark theme
+                   document.body.classList.add("theme-dark");
+               }
+           });
+
+           // Toggle particles
+           document.getElementById('toggle-particles').addEventListener('change', (event) => {
+               particlesEnabled = event.target.checked;
+           });
+      </script>
+ </body>
 </html>
