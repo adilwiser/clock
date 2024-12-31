@@ -3,368 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Clock</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
+    <title>Modern Digital Clock</title>
     <style>
         body {
-            margin: 0;
-            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #181818; 
+            color: #fff;
             overflow: hidden;
-            font-family: 'Arial', sans-serif;
-            color: #fff;
-            position: relative;
-            transition: background 0.5s ease, color 0.5s ease;
-        }
-
-        /* Default Dark Theme */
-        .theme-dark {
-            background-color: #121212; /* Dark mode background */
-            color: #fff;
-        }
-
-        /* Light Theme */
-        .theme-light {
-            background-color: #f0f0f0; /* Light mode background */
-            color: #000;
-        }
-
-        /* Blue Theme */
-        .theme-blue {
-            background-color: #1e3a8a; /* Dark blue background */
-            color: #ffffff;
-        }
-
-        /* Green Theme */
-        .theme-green {
-            background-color: #065f46; /* Dark green background */
-            color: #ffffff;
-        }
-
-        /* Red Theme */
-        .theme-red {
-            background-color: #b91c1c; /* Dark red background */
-            color: #ffffff;
-        }
-
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            animation: particleAnimation 2s infinite;
-        }
-
-        @keyframes particleAnimation {
-            0% {
-                transform: translate(0, 0);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(var(--x), var(--y));
-                opacity: 0;
-            }
+            transition: background-color 0.5s ease; 
         }
 
         .clock-container {
-            background: rgba(18, 18, 18, 0.7);
-            padding: 40px;
+            background: linear-gradient(45deg, #2980b9, #2c3e50); /* Theme 1: Dark Blue */
+            padding: 50px;
             border-radius: 20px;
-            box-shadow: 0 0 60px rgba(255, 204, 0, 0.5);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
             text-align: center;
-            backdrop-filter: blur(10px);
         }
 
-        .clock {
-            font-size: 100px;
-            font-family: 'Roboto', sans-serif;
-            letter-spacing: 5px;
-            animation: pulse 1.5s infinite;
+        .theme-dark {
+            background: linear-gradient(45deg, #2980b9, #2c3e50); /* Theme 1: Dark Blue */
+        }
+
+        .theme-light {
+            background: linear-gradient(to bottom right, #f6d365, #fda085); /* Theme 2: Sunset */
+            color: #333; 
+        }
+
+        /* Removed Neon Theme */
+
+        .theme-cyberpunk {
+            background: linear-gradient(45deg, #141624, #240b36); /* Theme 3: Cyberpunk */
+            color: #00ff00;
+        }
+
+        @keyframes neon { 
+            /* Removed Neon Theme's Keyframes */
+        }
+
+        .time {
+            font-size: 10rem;
+            font-weight: bold;
+            letter-spacing: -5px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+            animation: timePulse 1.5s infinite;
+        }
+
+        @keyframes timePulse {
+            0%, 100% {
+                text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            }
+            50% {
+                text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            }
         }
 
         .date {
-            font-size: 30px;
-            margin-top: 10px;
-            font-style: italic;
+            font-size: 2rem;
+            opacity: 0.7;
+            margin-bottom: 10px;
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                text-shadow: 0 0 30px rgba(255, 204, 0, 0.8);
-            }
-            50% {
-                text-shadow: 0 0 40px rgba(255, 204, 0, 1);
-            }
+        .day {
+            font-size: 1.5rem;
+            opacity: 0.5;
         }
 
-        .button {
+        .settings-button {
             position: absolute;
+            top: 20px;
+            right: 20px;
             background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 204, 0, 0.6); /* Outline for buttons */
-            color: inherit; /* Inherit text color from parent */
+            border: none;
+            color: #fff;
             padding: 10px;
-            border-radius:50%;
-            cursor:pointer; 
-             font-size:16px; 
-             width:50px; 
-             height:50px; 
-             display:flex; 
-             align-items:center; 
-             justify-content:center; 
-             box-shadow:0px2px20pxrgba(255,204,0,.4); 
-             transition:.3s; 
-         }
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
 
-         .fullscreen-button { top:20px; left:20px; }
-         .settings-button { top:20px; right:20px; }
+        .settings-menu {
+            display: none;
+            position: absolute;
+            top: 80px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
 
-         .button:hover {
-             background-color: rgba(255,255,255,.2); 
-             transform:scale(1.1); 
-             box-shadow:0px2px30pxrgba(255,204,0,.7); 
-             border-color: rgba(255,204,0,1); /* Change border color on hover */
-         }
+        .settings-menu label {
+            display: block;
+            margin-bottom: 10px;
+        }
 
-         .settings-menu {
-             display:none; 
-             position:absolute; 
-             top70px; /* Position below the settings button */
-             right20px; 
-             background-color:#222222; /* Darker background for settings menu */
-             border-radius10px; 
-             padding15px; 
-             box-shadow0px2px20pxrgba(0,0,0,.5); 
-             z-index:10; /* Ensure it appears above other elements */
-         }
+        .settings-menu input[type="radio"] {
+            margin-right: 5px;
+        }
 
-         .settings-menu h3 {
-             margin-top : -10px ; /* Adjust margin for title spacing */
-             margin-bottom :10px ; /* Space below title */
-         }
+        .settings-menu select {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="theme-dark">
 
-         .settings-menu label,
-         .settings-menu button,
-         .settings-menu input[type="color"] {
-             display:block; /* Stack elements vertically */
-             width : auto ; /* Auto width for inputs and buttons */
-             margin-bottom :10px ; /* Space between elements */
-         }
+    <div class="clock-container" id="clock-container">
+        <div class="time" id="time"></div>
+        <div class="date" id="date"></div>
+        <div class="day" id="day"></div>
+    </div>
 
-         .settings-menu button,
-         .settings-menu input[type="color"] {
-             background:none; 
-             border:none; 
-             color:#fff; 
-             cursor:pointer; 
-             font-size16px; 
-             padding5px; 
-         }
+    <button class="settings-button">⚙️</button>
 
-         .settings-menu button:hover {
-              text-decoration : underline ; /* Underline on hover for better feedback */
-         }
+    <div class="settings-menu" id="settings-menu">
+        <h3>Settings</h3>
+        <label>
+            <input type="radio" name="timeformat" value="12h" checked> 12 Hour
+        </label>
+        <label>
+            <input type="radio" name="timeformat" value="24h"> 24 Hour
+        </label>
+        <label>
+            Select Theme:
+            <select id="themeSelect">
+                <option value="dark">Dark</option>
+                <option value="light">Light</option> 
+                <option value="cyberpunk">Cyberpunk</option> 
+            </select>
+        </label>
+    </div>
 
-         /* New styles for alarm and stopwatch */
-         .alarm-container,
-         .stopwatch-container {
-             display:none; /* Initially hidden */
-             margin-top20px; /* Spacing */
-         }
+    <script>
+        let is24HourFormat = false; 
 
-         input[type="time"] {
-             width:auto; /* Auto width for time input */
-         }
+        function updateTime() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes().toString().padStart(2, '0');
+            let seconds = now.getSeconds().toString().padStart(2, '0');
 
-         .stopwatch-display {
-             font-size40px; /* Stopwatch font size */
-         }
-     </style>
- </head>
- <body class="theme-dark"> <!-- Default theme -->
-     <div class="clock-container" id="clock-container">
-         <div class="clock" id="clock"></div>
-         <div class="date" id="date"></div>
+            if (is24HourFormat) {
+                hours = String(hours).padStart(2, '0'); 
+            } else {
+                hours = hours % 12 || 12; 
+                if (hours === 0) {
+                    hours = 12; 
+                }
+            }
 
-         <!-- Alarm Section -->
-         <div class="alarm-container" id="alarm-container">
-              <h3>Set Alarm</h3>
-              <input type="time" id="alarm-time">
-              <button id="set-alarm">Set Alarm</button>
-              <p id="alarm-status"></p>
-         </div>
+            const amPm = is24HourFormat ? '' : (hours >= 12 ? ' PM' : ' AM'); 
+            const timeString = `${hours}:${minutes}:${seconds} ${amPm}`;
+            document.getElementById('time').textContent = timeString;
 
-         <!-- Stopwatch Section -->
-         <div class="stopwatch-container" id="stopwatch-container">
-              <h3>Stopwatch</h3>
-              <div class="stopwatch-display" id="stopwatch-display">00 : 00 : 00</div>
-              <button id="start-stopwatch">Start</button>
-              <button id="reset-stopwatch">Reset</button>
-         </div>
-     </div>
+            const options = { weekday: 'short', month: 'short', day: 'numeric' };
+            const dateString = now.toLocaleDateString('en-US', options);
+            document.getElementById('date').textContent = dateString;
 
-     <button class="button fullscreen-button">⛶</button>
-     <button class="button settings-button">⚙️</button>
+            const dayOfWeek = now.toLocaleDateString('en-US', { weekday: 'long' });
+            document.getElementById('day').textContent = dayOfWeek;
+        }
 
-     <div class="settings-menu" id="settings-menu">
-         <h3>Settings</h3> <!-- Added title for settings -->
-         
-         <!-- Toggle Time Format -->
-         <button id="toggle-24-hour">Toggle Time Format</button>
+        // 12/24 Hour Toggle
+        const timeFormatRadios = document.querySelectorAll('input[name="timeformat"]');
+        timeFormatRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                is24HourFormat = radio.value === '24h'; 
+                updateTime();
+            });
+        });
 
-         <!-- Theme Selector -->
-         <label for="theme-selector">Select Theme:</label>
-         <select id="theme-selector">
-              <option value="dark">Dark</option>
-              <option value="light">Light</option>
-              <option value="blue">Blue</option>
-              <option value="green">Green</option>
-              <option value="red">Red</option>
-          </select>
+        // Theme Selection
+        const themeSelect = document.getElementById('themeSelect');
+        themeSelect.addEventListener('change', () => {
+            const selectedTheme = themeSelect.value;
+            document.body.classList.remove('theme-dark', 'theme-light', 'theme-cyberpunk'); 
+            document.body.classList.add(`theme-${selectedTheme}`);
+        });
 
-          <!-- Particle Toggle -->
-          <label for="toggle-particles">Toggle Particles:</label>
-          <input type="checkbox" id="toggle-particles" checked>
-     </div>
+        // Update clock every second
+        setInterval(updateTime, 1000);
 
-     <script>
-         let is24HourFormat = true;
-         let particlesEnabled = true;
+        // Settings button functionality
+        const settingsButton = document.querySelector('.settings-button');
+        const settingsMenu = document.getElementById('settings-menu');
+        settingsButton.addEventListener('click', () => {
+            settingsMenu.style.display = settingsMenu.style.display === 'block' ? 'none' : 'block';
+        });
 
-         // Alarm functionality
-         let alarmTime = null;
+        updateTime(); 
+    </script>
 
-         const createParticle = (theme) => {
-             if (!particlesEnabled) return;
-
-             const particle = document.createElement('div');
-             particle.classList.add('particle');
-
-             // Set random size and position
-             const size = Math.random() * (15 - 5) + 10 + 'px'; // Increased size for better visibility
-             particle.style.width = size;
-             particle.style.height = size;
-
-             // Set particle colors based on theme
-             switch (theme) {
-                 case 'light':
-                     particle.style.backgroundColor = 'rgba(255,165,0,.8)'; // Bright orange particles
-                     break;
-                 case 'blue':
-                     particle.style.backgroundColor = 'rgba(173,216,230,.8)'; // Light blue particles
-                     break;
-                 case 'green':
-                     particle.style.backgroundColor = 'rgba(144,238,144,.8)'; // Light green particles
-                     break;
-                 case 'red':
-                     particle.style.backgroundColor = 'rgba(255,99,71,.8)'; // Tomato particles
-                     break;
-                 default:
-                     particle.style.backgroundColor = 'rgba(255,204,0,.8)'; // Yellow particles (dark theme)
-                     break;
-             }
-             
-             particle.style.setProperty('--x', `${Math.random() * (200) -100}px`);
-             particle.style.setProperty('--y', `${Math.random() * (200) -100}px`);
-             
-             particle.style.left = `${Math.random() * (100)}vw`;
-             particle.style.top = `${Math.random() * (100)}vh`;
-             
-             document.body.appendChild(particle);
-             
-             setTimeout(() => { particle.remove(); },2000);
-         };
-
-         setInterval(() => createParticle(currentTheme),300);
-
-         let currentTheme = 'dark';
-
-         function updateClock() {
-              const now = new Date();
-              let hours = now.getHours();
-              let minutes = now.getMinutes().toString().padStart(2,'0');
-              let seconds = now.getSeconds().toString().padStart(2,'0');
-              let amPm = '';
-
-              const options = { year:'numeric', month:'long', day:'numeric' };
-              const dateString = now.toLocaleDateString(undefined, options);
-
-              if (!is24HourFormat) {
-                  amPm = hours >=12 ? ' PM' : ' AM';
-                  hours = hours %12 ||12;
-              }
-              
-              hours = hours.toString().padStart(2,'0');
-
-              const timeString = `${hours}:${minutes}:${seconds}${amPm}`;
-              document.getElementById('clock').textContent = timeString;
-              document.getElementById('date').textContent = dateString;
-
-              // Check for alarm
-              if (alarmTime && `${hours}:${minutes}` === alarmTime) {
-                  alert("Alarm ringing!");
-                  alarmTime = null; // Reset alarm after ringing
-                  document.getElementById('alarm-status').textContent = "Alarm has rung!";
-              } else if (alarmTime) {
-                  document.getElementById('alarm-status').textContent = "Alarm set for " + alarmTime + ".";
-              } else {
-                  document.getElementById('alarm-status').textContent = "";
-              }
-          }
-
-          setInterval(updateClock,1000);
-          updateClock();
-
-          // Alarm functionality
-          document.getElementById('set-alarm').addEventListener('click', () => {
-              const alarmInput = document.getElementById('alarm-time').value;
-              if (alarmInput) {
-                  alarmTime = alarmInput + ":00"; // Set alarm time in HH:mm:ss format
-                  document.getElementById('alarm-status').textContent = "Alarm set for " + alarmTime + ".";
-              }
-          });
-
-          // Fullscreen toggle
-          document.querySelector('.fullscreen-button').addEventListener('click', () => {
-              if (!document.fullscreenElement) { document.documentElement.requestFullscreen(); } else { document.exitFullscreen(); }
-          });
-
-          // Settings menu toggle
-          document.querySelector('.settings-button').addEventListener('click', () => {
-              const settingsMenu = document.getElementById('settings-menu');
-              settingsMenu.style.display = settingsMenu.style.display === 'block' ? 'none' : 'block';
-          });
-
-          // Toggle time format
-          document.getElementById('toggle-24-hour').addEventListener('click', () => {
-              is24HourFormat = !is24HourFormat;
-              updateClock();
-          });
-
-          // Theme Selector
-          document.getElementById('theme-selector').addEventListener('change', (event) => {
-               currentTheme = event.target.value;
-
-               // Remove all theme classes
-               document.body.classList.remove("theme-dark", "theme-light", "theme-blue", "theme-green", "theme-red");
-
-               // Add the selected theme class
-               if (currentTheme === "light") {
-                   document.body.classList.add("theme-light");
-               } else if (currentTheme === "blue") {
-                   document.body.classList.add("theme-blue");
-               } else if (currentTheme === "green") {
-                   document.body.classList.add("theme-green");
-               } else if (currentTheme === "red") {
-                   document.body.classList.add("theme-red");
-               } else { // Default to dark theme
-                   document.body.classList.add("theme-dark");
-               }
-           });
-
-           // Toggle particles
-           document.getElementById('toggle-particles').addEventListener('change', (event) => {
-               particlesEnabled = event.target.checked;
-           });
-      </script>
- </body>
+</body>
 </html>
